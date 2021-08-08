@@ -1,0 +1,71 @@
+<html>
+<head>
+<meta charset="utf8"/>
+<title>JS Class & Prototype</title>
+<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<script>
+//. 普通のクラス
+class MyClass{
+  constructor( height, weight ){
+    this.height = height;
+    this.weight = weight;
+  }
+
+  showBMI = function(){
+    return this.weight / ( this.height * this.height );
+  }
+};
+//. 普通のクラスにプロトタイプ関数を追加定義
+MyClass.prototype.my_function = function(){
+  console.log( 'my_function' );
+};
+
+//. 対象クラス
+class NewClass{
+  constructor( height, weight, callback ){
+    this.height = height;
+    this.weight = weight;
+    //. コンストラクターでプロトタイプ関数を上書き
+    this.my_function = callback;
+  }
+
+  showBMI = function(){
+    return this.weight / ( this.height * this.height );
+  }
+};
+//. 対象クラスにプロトタイプ関数を追加定義
+NewClass.prototype.my_function = function(){
+  console.log( 'my_function' );
+};
+$(function(){
+  var me = new MyClass( 1.71, 71.4 );
+  console.log( me.showBMI() );
+  me.my_function();
+
+  me.my_function = function(){
+    console.log( 'new my_function' );
+  }
+  me.my_function();
+
+  //. 新クラスをインスタンス化
+  var newme = new NewClass( 1.71, 71.4, my_callback );
+  console.log( newme.showBMI() );
+  newme.my_function();  //. 元の定義関数を実行した際に、上書きしたコールバックが表示されることを確認
+});
+//. プロトタイプコールバック関数を、このコールバック関数で上書き
+function my_callback(){
+  console.log( 'my_callback' );
+}
+</script>
+<style>
+body{
+  background-color: #fcc;
+}
+</style>
+</head>
+<body>
+</body>
+</html>

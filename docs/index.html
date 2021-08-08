@@ -12,6 +12,7 @@ class MyClass{
   constructor( height, weight ){
     this.height = height;
     this.weight = weight;
+    this.showBMI();
   }
 
   showBMI = function(){
@@ -28,6 +29,7 @@ class NewClass{
   constructor( height, weight, callback ){
     this.height = height;
     this.weight = weight;
+    this.showBMI();
     //. コンストラクターでプロトタイプ関数を上書き
     this.my_function = callback;
   }
